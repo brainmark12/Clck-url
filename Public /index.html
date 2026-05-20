@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartLink - URL Shortener</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+  <div class="hero">
+    <h1>Short links, big results</h1>
+    <p>Create powerful and trackable short links instantly.</p>
+  </div>
+
+  <div class="card">
+
+    <input type="url" id="original" placeholder="Paste long URL here">
+
+    <input type="text" id="custom" placeholder="Custom alias (optional)">
+
+    <button onclick="shortenUrl()">Shorten URL</button>
+
+    <div id="result"></div>
+
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
