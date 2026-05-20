@@ -1,42 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Clck URL</title>
-<link rel="stylesheet" href="style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Clck URL Shortener</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#0f172a;
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+}
+
+.container{
+  width:100%;
+  max-width:420px;
+  padding:20px;
+}
+
+h1{
+  text-align:center;
+  font-size:24px;
+  margin-bottom:15px;
+}
+
+.card{
+  background:#111827;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+}
+
+input{
+  width:100%;
+  padding:14px;
+  margin-bottom:10px;
+  border:none;
+  border-radius:8px;
+  font-size:15px;
+  outline:none;
+}
+
+button{
+  width:100%;
+  padding:14px;
+  background:#2563eb;
+  border:none;
+  color:white;
+  font-size:16px;
+  border-radius:8px;
+  cursor:pointer;
+  margin-top:5px;
+}
+
+button:hover{
+  background:#1d4ed8;
+}
+
+.result-box{
+  margin-top:15px;
+  display:none;
+  background:#0b1220;
+  padding:12px;
+  border-radius:8px;
+}
+
+.result-box input{
+  margin-bottom:10px;
+  background:#111827;
+  color:#fff;
+}
+
+.copy-btn{
+  background:#16a34a;
+}
+
+.copy-btn:hover{
+  background:#15803d;
+}
+</style>
 </head>
+
 <body>
 
 <div class="container">
 
 <h1>Clck URL Shortener</h1>
 
-<input type="url" id="original" placeholder="Paste long URL">
+<div class="card">
 
+<input type="url" id="original" placeholder="Paste your long URL">
 <input type="text" id="custom" placeholder="Custom alias (optional)">
 
 <button onclick="shortenUrl()">Shorten URL</button>
 
-<div id="result"></div>
+<!-- RESULT -->
+<div class="result-box" id="resultBox">
+  <input type="text" id="shortLink" readonly>
+  <button class="copy-btn" onclick="copyLink()">Copy Link</button>
+</div>
 
 </div>
 
-<script src="script.js"></script>
+</div>
+
+<script>
+async function shortenUrl() {
+  const original = document.getElementById("original").value;
+  const custom = document.getElementById("custom").value;
+
+  if(!original){
+    alert("Please paste a URL");
+    return;
+  }
+
+  try {
+    const res = await fetch("/shorten", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({ original, custom })
+    });
+
+    const data = await res.json();
+
+    const shortLink = data.shortUrl || "Error generating link";
+
+    document.getElementById("resultBox").style.display = "block";
+    document.getElementById("shortLink").value = shortLink;
+
+  } catch (err) {
+    alert("Error shortening URL");
+  }
+}
+
+function copyLink() {
+  const copyText = document.getElementById("shortLink");
+
+  navigator.clipboard.writeText(copyText.value)
+    .then(() => {
+      alert("Link copied successfully!");
+    });
+}
+</script>
 
 </body>
-                          </html>
-                          <button id="copyBtn" onclick="copyLink()" style="
-  display:none;
-  margin-top:10px;
-  width:100%;
-  padding:14px;
-  background:#16a34a;
-  color:#fff;
-  border:none;
-  border-radius:8px;
-  font-size:16px;
-  cursor:pointer;
-">
-  Copy Link
-                          </button>
+</html>
