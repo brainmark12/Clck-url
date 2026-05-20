@@ -1,28 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Clck URL</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
+<div id="resultBox" style="display:none; margin-top:20px;">
+  <input 
+    type="text" 
+    id="shortLink" 
+    readonly
+    style="
+      width:100%;
+      padding:14px;
+      border:none;
+      border-radius:10px;
+      font-size:16px;
+      margin-bottom:10px;
+    "
+  >
 
-<div class="container">
-
-<h1>Clck URL Shortener</h1>
-
-<input type="url" id="original" placeholder="Paste long URL">
-
-<input type="text" id="custom" placeholder="Custom alias (optional)">
-
-<button onclick="shortenUrl()">Shorten URL</button>
-
-<div id="result"></div>
-
+  <button onclick="copyLink()" style="
+    width:100%;
+    padding:14px;
+    background:#16a34a;
+    color:white;
+    border:none;
+    border-radius:10px;
+    font-size:18px;
+    cursor:pointer;
+  ">
+    Copy Link
+  </button>
 </div>
-
-<script src="script.js"></script>
-
-</body>
-</html>
