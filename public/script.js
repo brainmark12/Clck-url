@@ -1,17 +1,30 @@
-<script>
-function showShortLink(link) {
-  document.getElementById("resultBox").style.display = "block";
-  document.getElementById("shortLink").value = link;
+async function shortenUrl(){
+
+const original=document.getElementById("original").value;
+const custom=document.getElementById("custom").value;
+
+const result=document.getElementById("result");
+
+const res=await fetch("/shorten",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+original,
+custom
+})
+});
+
+const data=await res.json();
+
+result.innerHTML=`<a href="${data.shortUrl}" target="_blank">${data.shortUrl}</a>`;
+
 }
+function shortenUrl() {
+  // your existing code...
 
-function copyLink() {
-  const copyText = document.getElementById("shortLink");
+  document.getElementById("result").innerText = shortLink;
 
-  copyText.select();
-  copyText.setSelectionRange(0, 99999);
-
-  navigator.clipboard.writeText(copyText.value);
-
-  alert("Link copied successfully!");
+  document.getElementById("copyBtn").style.display = "block";
 }
-</script>
