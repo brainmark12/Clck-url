@@ -1,23 +1,17 @@
-async function shortenUrl(){
+<script>
+function showShortLink(link) {
+  document.getElementById("resultBox").style.display = "block";
+  document.getElementById("shortLink").value = link;
+}
 
-const original=document.getElementById("original").value;
-const custom=document.getElementById("custom").value;
+function copyLink() {
+  const copyText = document.getElementById("shortLink");
 
-const result=document.getElementById("result");
+  copyText.select();
+  copyText.setSelectionRange(0, 99999);
 
-const res=await fetch("/shorten",{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({
-original,
-custom
-})
-});
+  navigator.clipboard.writeText(copyText.value);
 
-const data=await res.json();
-
-result.innerHTML=`<a href="${data.shortUrl}" target="_blank">${data.shortUrl}</a>`;
-
-  }
+  alert("Link copied successfully!");
+}
+</script>
